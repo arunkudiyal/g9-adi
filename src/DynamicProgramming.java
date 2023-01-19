@@ -1,45 +1,48 @@
 import java.util.Scanner;
 
 public class DynamicProgramming {
-    //    public static int fib(int n) {
-    //        if(n == 1) return 0;
-    //        if(n == 2) return 1;
-    //        return fib(n-1) + fib(n-2);
-    //    }
+    //        public static int fib(int n) {
+    //            if(n == 1) return 0;
+    //            if(n == 2) return 1;
+    //            return fib(n-1) + fib(n-2);
+    //        }
 
     public static int lis(int n, int[] arr) {
-        int ans = 0;
-        // Memo
-        int memo[] = new int[n];
-        memo[0] = 1;
+        int[] output = new int[n];
+        for(int i=0; i < n; i++) {
+            output[i] = 1;
+        }
 
         for(int i=1; i < n; i++) {
-            for(int j= i-1; j >= 0; j--) {
-                if(arr[i] < arr[j]) {
-                    memo[i] = memo[j];
+            for(int j=i-1; j >= 0; j--) {
+                if(arr[j] > arr[i]) {
                     continue;
-                } else {
-                    memo[i] = memo[j] + 1;
+                }
+                int possibleAns = output[j] + 1;
+                if(output[i] < possibleAns) {
+                    output[i] = possibleAns;
                 }
             }
         }
-        for(int i=1; i < n; i++) {
-            if(memo[i] > ans) {
-                ans = memo[i];
+
+        int answer = 1;
+        for(int i=0; i < n; i++) {
+            if(answer < output[i]) {
+                answer = output[i];
             }
         }
-        return ans;
+
+        return answer;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int arr[] = new int[n];
-
-        for(int i=0; i < n; i++) {
+        int[] arr = new int[n];
+        for(int i=0 ; i < n; i++) {
             arr[i] = sc.nextInt();
         }
-        int solution = lis(n, arr);
-        System.out.println(solution);
+        int lisOutput = lis(n, arr);
+        System.out.println(lisOutput);
     }
 }

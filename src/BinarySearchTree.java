@@ -23,11 +23,8 @@ public class BinarySearchTree {
 
     public boolean search(int key) {
         Node address = searchData(root, key);
-        if(address == null) {
-            return false;
-        } else {
-            return true;
-        }
+        if(address == null) return false;
+        return true;
     }
 
     public void delete(int key) {
@@ -35,28 +32,18 @@ public class BinarySearchTree {
     }
 
     public Node searchData(Node root, int key) {
-        if(root == null || key == root.data) {
-            return root;
-        }
-        if(key < root.data) {
-            return searchData(root.left, key);
-        }
+        if(root == null || key == root.data) return root;
+        if(key < root.data) return searchData(root.left, key);
         return searchData(root.right, key);
     }
 
     public Node insertData(Node root, int key) {
         // The data is inserted for the first time
-        if(root == null) {
-            root = new Node(key);
-        }
+        if(root == null) root = new Node(key);
         // left subtree
-        else if(key < root.data) {
-            root.left = insertData(root.left, key);
-        }
+        else if(key < root.data) root.left = insertData(root.left, key);
         // right subtree
-        else if(key > root.data) {
-            root.right = insertData(root.right, key);
-        }
+        else if(key > root.data) root.right = insertData(root.right, key);
         return root;
     }
 
@@ -70,20 +57,13 @@ public class BinarySearchTree {
     }
 
     public Node deleteKey(Node root, int key) {
-        if(root == null) {
-            return null;
-        } else {
-            if(key > root.data) {
-                root.right = deleteKey(root.right, key);
-            }
-            else if(key < root.data) {
-                root.left = deleteKey(root.left, key);
-            }
+        if(root == null) return null;
+        else {
+            if(key > root.data) root.right = deleteKey(root.right, key);
+            else if(key < root.data) root.left = deleteKey(root.left, key);
             else {
-                if(root.left == null)
-                    return root.right;
-                else if(root.right == null)
-                    return  root.left;
+                if(root.left == null) return root.right;
+                else if(root.right == null) return  root.left;
                  else {
                     root.data = findMinVal(root.right);
                     root.right = deleteKey(root.right, root.data);
@@ -119,11 +99,8 @@ public class BinarySearchTree {
         System.out.println();
 
         boolean ans = bst.search(-1);
-        if(ans) {
-            System.out.println("Yes, it exists");
-        } else {
-            System.out.println("No, it does not exist!");
-        }
+        if(ans) System.out.println("Yes, it exists");
+        else System.out.println("No, it does not exist!");
 
         // delete
         bst.delete(24);
